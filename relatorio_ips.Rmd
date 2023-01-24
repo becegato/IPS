@@ -1,0 +1,99 @@
+---
+title: "Índice de Interesse por Planos de Saúde (IPS – ABRAMGE)"
+output:
+  word_document:
+    number_sections: true
+---
+
+```{r, echo=FALSE}
+source("R/0_libraries.R")
+source("R/0_functions.R", local = knitr::knit_global())
+source("R/1_trends.R", local = knitr::knit_global())
+
+options(dplyr.summarise.inform = FALSE)
+options(digits = 3)
+
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  error = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
+
+mes <- "Dezembro"
+ano <- "2022"
+edicao <- 52
+ano_mes <- glue::glue("{ano}-12-31") |> lubridate::as_date()
+ano_mes_52 <- ano_mes - 364
+```
+
+---
+subtitle: "`r mes`/`r ano` (`r edicao`ª Edição)"
+---
+
+<!-- Google Trends -->
+
+```{r, include=FALSE}
+gtrends_ips(
+  color = "#804494", 
+  map_color = "GnBu",
+  ano_mes,
+  ano_mes_52
+)
+
+# para ver cores disponíveis para mapa, usar tmaptools::palette_explorer()
+```
+
+# Introdução
+
+O Índice de Interesse por Planos de Saúde (IPS/Abramge) foi criado pela Abramge com o objetivo de medir o nível de buscas por planos de saúde ao longo do tempo no [Google Search](www.google.com), retratando sistematicamente o nível de interesse da população brasileira.
+
+O IPS/Abramge consolida dados semanais e agrupa em uma média móvel de 52 semanas ou um ano, de modo a eliminar a influência de efeitos sazonais, de feriados e de períodos de recesso.
+
+A nota técnica que explica a metodologia do cálculo do IPS/ABRAMGE pode ser acessada em (AQUI COLOCAR LINK DO LOCAL NO SITE ONDE PODEMOS DEIXAR A ULTIMA SEÇÃO DO IPS, DA NOTA TECNICA)
+
+# Índice de Interesse por Planos de Saúde - IPS/Abramge (`r mes`/`r ano`)
+
+**Gráfico 1 -- Índice de Interesse por Planos de Saúde (IPS/Abramge) -- Série Histórica**
+
+**`r ano_mes_52` a `r ano_mes`**
+
+```{r, fig.cap="Fonte: Elaborado pela ABRAMGE/SINAMGE/SINOG com base em informações do Google Trends."}
+knitr::include_graphics(path = "outputs/grafico_1.png")
+```
+
+A procura por planos de saúde é fortemente influenciada pelo cenário macroeconômico. Em períodos de melhora nas expectativas e nos indicadores econômicos como, por exemplo, entre o início de 2017 e junho de 2018 e entre abril de 2019 e fevereiro de 2020, o índice IPS/Abramge apresentou crescimento. Em períodos de piora das perspectivas econômicas, como ocorrido a partir de março de 2020, o índice apresentou queda expressiva.
+
+Após um período de recuperação entre março e junho de 2021, o volume de buscas começou a apresentar uma ligeira queda. Ao final de junho, o índice atingiu o maior volume dos últimos 12 meses (71,9 pontos). No entanto, a partir de julho, o índice caiu 0,8 pontos, fechando o mês de setembro em 71,1 pontos. A estagnação das buscas se deve principalmente às incertezas e lentidão da recuperação da economia após o fim da fase mais aguda da pandemia. A tendência se manteve para o mês de outubro, que fechou no nível de 67 pontos.
+
+Os dados econômicos dos últimos meses vêm demonstrando as dificuldades de recuperação. O Índice de Atividade Econômica (IBC-Br) do Bacen, indicador mensal que busca antecipar o resultado do Produto Interno Bruto (PIB), apresentou queda de 0,15% em agosto em comparação com o mês anterior, maior do que a esperada pelo mercado[^1]. Este resultado derruba as previsões de crescimento do PIB em 2021. De acordo com o último boletim Focus do Bacen (08/10)[^2], a expectativa é de 5,04%. Em agosto, o crescimento estimado era de 5,30%.
+
+[^1]: De acordo pesquisa realizada pelo site de notícias Reuters, a expectativa de queda do índice em agosto foi de -0,05%, como pode ser visto em <https://br.investing.com/news/economic-indicators/ibcbr-tem-queda-de-015-em-agosto-acima-do-esperado-928923>
+
+[^2]: O Relatório Focus resume as estatísticas calculadas considerando as expectativas de especialistas do mercado financeiro, e pode ser consultado em <https://www.bcb.gov.br/publicacoes/focus/cronologicos>
+
+Além disso, a inflação registrada nos últimos meses também preocupa os consumidores e afeta a busca por planos de saúde. Em setembro, o IPCA manteve sua trajetória de crescimento, atingindo 1,16%, o que indica uma inflação ainda maior do que a registrada em agosto (0,87%). Este é o maior índice registrado para um mês de setembro desde 1994, contribuindo para que a inflação acumulada nos últimos 12 meses esteja em dois dígitos, 10,25%.
+
+**Gráfico 2 -- Índice de Interesse por Planos de Saúde (IPS/Abramge) -- 52 semanas**
+
+**`r ano_mes_52` a `r ano_mes`**
+
+```{r, fig.cap="Fonte: Elaborado pela ABRAMGE/SINAMGE/SINOG com base em informações do Google Trends."}
+knitr::include_graphics(path = "outputs/grafico_2.png")
+```
+
+# Buscas Regionais por Planos de Saúde (`r mes`/`r ano`)
+
+A análise do volume de buscas por planos de saúde desagregada por Unidades da Federação (UF), historicamente aponta o Distrito Federal e o Rio de Janeiro como as UFs onde as populações possuem maior interesse em planos de saúde. Nos últimos 12 meses, apresentaram 91,8 e 80,4 pontos, respectivamente. Em seguida aparecem os estados de São Paulo (56,2), Goiás (50,6), e Espírito Santo (50,1). Os demais estados apresentaram índice inferior a 50 pontos.
+
+O índice regionalizado permite notar padrões de buscas por planos de saúde entre as regiões do país. Por exemplo, os estados da região Sul apresentam baixo volume de buscas em relação às demais unidades da federação. O Rio Grande do Sul, por exemplo, apresenta volume de buscas superior apenas a Rondônia, a Roraima e ao Acre. No Nordeste, três estados despontam como líderes em volume de busca desde o início da divulgação do índice regionalizado. São eles: Bahia, Pernambuco e Rio Grande do Norte.
+
+Na região Norte, o Amapá se destaca com o maior volume de buscas por planos de saúde, apresentando nos últimos anos índice IPS/Abramge consideravelmente acima dos demais estados da mencionada região.
+
+**Gráfico 3 -- Buscas Regionais por Planos de Saúde -- 52 semanas**
+
+**`r ano_mes_52` a `r ano_mes`**
+
+```{r, fig.cap="Fonte: Elaborado pela ABRAMGE/SINAMGE/SINOG com base em informações do Google Trends."}
+knitr::include_graphics(path = "outputs/mapa.png")
+```
